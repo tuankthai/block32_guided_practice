@@ -4,9 +4,21 @@ const util = require('util');
 const REPLACE_ME = 'HELP REPLACE ME!!!!';
 
 // GET - /api/cats - get all cats
+// async function getAllCats() {
+//     try {
+//         const { rows } = REPLACE_ME;
+//         return rows;
+//     } catch (error) {
+//         throw error;
+//     }
+// }
+
+// In the './db/cats.js' file, we need to write an async database query to select all entries from the cats table.
 async function getAllCats() {
     try {
-        const { rows } = REPLACE_ME;
+        const { rows } = await client.query(`
+            SELECT * FROM cats;
+        `);
         return rows;
     } catch (error) {
         throw error;
@@ -44,7 +56,13 @@ async function createCat(body) {
 // PUT - /api/cats/:catId - update a cat
 async function updateCat(catId, fields = {}) {
     // build the set string
+    Object.keys(fields).map((key, index) => {
+        console.log( `"${key}"=$${index + 1}`);
+        
+    });
+
     const setString = Object.keys(fields).map((key, index) => `"${key}"=$${index + 1}`).join(', ');
+    console.log(typeof(setString))
 
     // return early if this is called without fields
     if (setString.length === 0) {

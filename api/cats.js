@@ -3,18 +3,32 @@ const router = express.Router();
 
 const REPLACE_ME = 'HELP REPLACE ME!!!!';
 
-const { getAllCats, getCatById, updateCat, deleteCat } = require('../db');
+const { getAllCats, getCatById, createCat, updateCat, deleteCat } = require('../db');
+
+
+
 
 // GET - /api/cats - get all cats
+// router.get('/', async (req, res, next) => {
+//     try {
+//         const cats = await getAllCats();
+//         console.log(cats);
+//         res.send(REPLACE_ME);
+//     } catch (error) {
+//         next(error);
+//     }
+// });
+
+// In the './api/cats.js' file, we need to call the getAllCats function and await the response.
 router.get('/', async (req, res, next) => {
     try {
         const cats = await getAllCats();
-        console.log(cats);
-        res.send(REPLACE_ME);
+        res.send(cats);
     } catch (error) {
         next(error);
     }
 });
+
 
 // GET - /api/cats/:catId - get cat by id
 router.get('/:catId', async (req, res, next) => {
